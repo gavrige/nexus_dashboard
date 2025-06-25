@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-t">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Nexus Dashboard{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  </head>
+  <body>
+    <main class="container">
+      <nav>
+        <ul>
+          <li><strong><a href="{{ url_for('routes.dashboard') }}">NEXUS</a></strong></li>
+        </ul>
+        <ul>
+          <li><a href="{{ url_for('routes.dashboard') }}">Dashboard</a></li>
+          <li><a href="{{ url_for('routes.manual_entry') }}">Add Manual Asset</a></li>
+        </ul>
+      </nav>
+
+      {% block content %}{% endblock %}
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </body>
+</html>

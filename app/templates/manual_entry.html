@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}Add Manual Asset - {{ super() }}{% endblock %}
+
+{% block content %}
+  <article>
+    <header>
+      <h2>Add a Manual Asset</h2>
+      <p>Use this for tracking things like sportsbook balances, referral bonuses, or other assets not available through an API.</p>
+    </header>
+    <form method="POST">
+      <label for="name">Asset Name</label>
+      <input type="text" id="name" name="name" placeholder="e.g., DraftKings Balance" required>
+
+      <label for="category">Category</label>
+      <input type="text" id="category" name="category" placeholder="e.g., Sportsbook" required>
+
+      <label for="value">Current Value ($)</label>
+      <input type="number" id="value" name="value" step="0.01" placeholder="e.g., 150.75" required>
+
+      <button type="submit">Add Asset</button>
+    </form>
+  </article>
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends "layout.html" %}
+
+{% block title %}Dashboard - {{ super() }}{% endblock %}
+
+{% block content %}
+  <header>
+    <h2>Total Net Worth: ${{ "%.2f"|format(net_worth) }}</h2>
+  </header>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <article class="{{ 'error' in category and 'warning' or '' }}">
+          {{ message }}
+        </article>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <div class="grid">
+    <section>
+      <article>
+        <header>Traditional Assets: <strong>${{ "%.2f"|format(plaid_total) }}</strong></header>
+        <table>
+          <thead>
+            <tr>
+              <th>Account</th>
+              <th>Type</th>
+              <th>Balance</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for account in plaid_accounts %}
+            <tr>
+              <td>{{ account.name }}</td>
+              <td>{{ account.subtype }}</td>
+              <td>${{ "%.2f"|format(account.balance_current) }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="3">No Plaid accounts linked yet.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </article>
+      <article>
+        <header>Manual Assets: <strong>${{ "%.2f"|format(manual_total) }}</strong></header>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for asset in manual_assets %}
+            <tr>
+              <td>{{ asset.name }}</td>
+              <td>{{ asset.category }}</td>
+              <td>${{ "%.2f"|format(asset.value) }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="3">No manual assets added yet.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </article>
+    </section>
+
+    <aside>
+      <article>
+        <header>Asset Allocation</header>
+        <canvas id="assetAllocationChart" 
+                data-labels='{{ chart_data.labels | tojson }}'
+                data-values='{{ chart_data.values | tojson }}'></canvas>
+      </article>
+      <article>
+        <header>Crypto Assets: <strong>${{ "%.2f"|format(crypto_total) }}</strong></header>
+        <table>
+          <thead>
+            <tr>
+              <th>Symbol</th>
+              <th>Quantity</th>
+              <th>Source</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for holding in crypto_holdings %}
+            <tr>
+              <td>{{ holding.symbol.upper() }}</td>
+              <td>{{ holding.quantity }}</td>
+              <td>{{ holding.source }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="3">No crypto assets added yet.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </article>
+    </aside>
+  </div>
+
+{% endblock %}
