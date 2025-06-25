@@ -1,0 +1,9 @@
+Flask
+SQLAlchemy
+Flask-SQLAlchemy
+plaid-python
+pycoingecko
+requests
+python-dotenv
+apscheduler
+gunicorn
